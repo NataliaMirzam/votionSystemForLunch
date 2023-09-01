@@ -1,7 +1,9 @@
 package org.example.web;
 
+import org.example.model.AbstractBaseEntity;
+
 public class SecurityUtil {
-    private static int id = 100001;
+    private static int id = AbstractBaseEntity.START_SEQ;
 
     private SecurityUtil() {}
 
