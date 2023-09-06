@@ -1,5 +1,6 @@
 package org.example.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;

@@ -1,12 +1,17 @@
 package org.example.model;
 
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 
 @Entity
-@Table(name = "meals")
+@Table(name = "meal")
 public class Meal extends AbstractNamedEntity {
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)

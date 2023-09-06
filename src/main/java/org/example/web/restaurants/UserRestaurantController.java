@@ -1,6 +1,6 @@
 package org.example.web.restaurants;
 
-import org.example.service.RestaurantService;
+import org.example.repository.restaurant.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user/restaurants")
 public class UserRestaurantController {
-    private final RestaurantService restaurantService;
+    private final RestaurantRepository repository;
 
     @Autowired
-    public UserRestaurantController(RestaurantService restaurantService) {
-        this.restaurantService = restaurantService;
+    public UserRestaurantController(RestaurantRepository repository) {
+        this.repository = repository;
     }
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("restaurants", restaurantService.getAll());
+        model.addAttribute("restaurants", repository.getAll());
         return "restaurants/user_index";
     }
 }

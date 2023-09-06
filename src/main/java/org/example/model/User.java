@@ -1,9 +1,11 @@
 package org.example.model;
 
+import org.example.HasIdAndEmail;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -17,7 +19,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends AbstractNamedEntity {
+public class User extends AbstractNamedEntity implements HasIdAndEmail {
     @Email(message = "Email should be valid")
     @Column(name = "email", nullable = false, unique = true)
     @NotBlank(message = "Email should not be blank")
@@ -49,12 +51,16 @@ public class User extends AbstractNamedEntity {
     public User() {
     }
 
-    public User(Integer id, String name, String email, String password, boolean enabled, Date registered) {
-        super(id, name);
+    public User(Integer id, String name, String email, String password, boolean enabled, Date registered, Set<Role> roles) {
         this.email = email;
         this.password = password;
         this.enabled = enabled;
         this.registered = registered;
+        this.roles = roles;
+    }
+
+    public User(User u) {
+        this(u.id, u.name, u.email, u.password, u.enabled, u.registered, u.roles);
     }
 
     public String getEmail() {

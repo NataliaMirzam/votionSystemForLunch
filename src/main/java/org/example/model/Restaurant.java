@@ -3,11 +3,12 @@ package org.example.model;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "restaurants")
+@Table(name = "restaurant")
 public class Restaurant extends AbstractNamedEntity {
     @Column(name = "meals")
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")

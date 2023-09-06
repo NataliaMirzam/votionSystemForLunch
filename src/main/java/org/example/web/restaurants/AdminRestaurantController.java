@@ -1,8 +1,7 @@
 package org.example.web.restaurants;
 
 import org.example.model.Restaurant;
-import org.example.model.User;
-import org.example.service.RestaurantService;
+import org.example.repository.restaurant.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,16 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin/restaurants")
 public class AdminRestaurantController {
-    private final RestaurantService restaurantService;
+    private final RestaurantRepository repository;
 
     @Autowired
-    public AdminRestaurantController(RestaurantService restaurantService) {
-        this.restaurantService = restaurantService;
+    public AdminRestaurantController(RestaurantRepository repository) {
+        this.repository = repository;
     }
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("restaurants", restaurantService.getAll());
+        model.addAttribute("restaurants", repository.getAll());
         return "restaurants/admin_index";
     }
 

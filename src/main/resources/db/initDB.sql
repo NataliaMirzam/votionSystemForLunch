@@ -26,28 +26,28 @@ CREATE TABLE user_role
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
-CREATE TABLE restaurants
+CREATE TABLE restaurant
 (
     id INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
     name          VARCHAR NOT NULL
 );
 
-CREATE TABLE meals
+CREATE TABLE meal
 (
     id INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
     name VARCHAR NOT NULL,
     restaurant_id INTEGER NOT NULL,
-    FOREIGN KEY (restaurant_id) REFERENCES restaurants (restaurant_id) ON DELETE CASCADE
+    FOREIGN KEY (restaurant_id) REFERENCES restaurant (restaurant_id) ON DELETE CASCADE
 );
 
-CREATE TABLE votes
+CREATE TABLE vote
 (
     id            INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
     user_id       INTEGER                                               NOT NULL,
-    "date"        DATE                DEFAULT CAST( now() AS Date ) NOT NULL,
-    "time"        TIME                DEFAULT CAST( now() AS Time ) NOT NULL,
+    dt            DATE                DEFAULT CAST( now() AS Date ) NOT NULL,
+    tm            TIME                DEFAULT CAST( now() AS Time ) NOT NULL,
     restaurant_id INTEGER                                               NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
-    FOREIGN KEY (restaurant_id) REFERENCES restaurants (restaurant_id) ON DELETE CASCADE
+    FOREIGN KEY (restaurant_id) REFERENCES restaurant (restaurant_id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX votes_unique_user_datetime_idx ON votes (user_id, date);
+CREATE UNIQUE INDEX votes_unique_user_datetime_idx ON votes (user_id, dt);

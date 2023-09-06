@@ -1,6 +1,7 @@
 package org.example.model;
 
-import org.springframework.data.domain.Persistable;
+
+import org.example.HasId;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
@@ -8,7 +9,7 @@ import java.util.Objects;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public abstract class AbstractBaseEntity implements Persistable<Integer> {
+public abstract class AbstractBaseEntity implements HasId {
     public static final int START_SEQ = 100000;
 
     @Id

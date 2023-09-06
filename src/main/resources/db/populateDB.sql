@@ -1,7 +1,7 @@
 DELETE FROM user_role;
 DELETE FROM users;
-DELETE FROM meals;
-DELETE FROM restaurants;
+DELETE FROM meal;
+DELETE FROM restaurant;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password)
@@ -12,12 +12,12 @@ INSERT INTO user_role (role, user_id)
 VALUES ('USER', 100000),
        ('ADMIN', 100001);
 
-INSERT INTO restaurants (name)
+INSERT INTO restaurant (name)
 VALUES ('Italian'),
        ('Chinese'),
        ('Hindian');
 
-INSERT INTO meals (name, restaurant_id)
+INSERT INTO meal (name, restaurant_id)
 VALUES ('Italian breakfast', 100002),
        ('Italian lunch', 100002),
        ('Italian dinner', 100002),
