@@ -1,5 +1,6 @@
 package org.example.model;
 
+import org.example.HasId;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "restaurant")
-public class Restaurant extends AbstractNamedEntity {
+public class Restaurant extends AbstractNamedEntity implements HasId {
     @Column(name = "meals")
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant")
     @OnDelete(action = OnDeleteAction.CASCADE)

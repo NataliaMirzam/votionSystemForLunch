@@ -1,6 +1,7 @@
 package org.example.model;
 
 
+import org.example.HasId;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -12,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "meal")
-public class Meal extends AbstractNamedEntity {
+public class Meal extends AbstractNamedEntity implements HasId {
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

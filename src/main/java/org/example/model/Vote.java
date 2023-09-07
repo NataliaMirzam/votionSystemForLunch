@@ -1,6 +1,7 @@
 package org.example.model;
 
 
+import org.example.HasId;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
