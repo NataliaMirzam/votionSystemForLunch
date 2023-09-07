@@ -5,6 +5,7 @@ import org.example.repository.restaurant.CrudRestaurantRepository;
 import org.example.repository.user.CrudUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -25,6 +26,8 @@ public class DataJpaVoteRepository implements VoteRepository{
         this.crudUserRepository = crudUserRepository;
     }
 
+    @Override
+    @Transactional
     public Vote save(Vote vote, int restaurantId, int userId) {
         LocalTime elevenOClock = LocalTime.of(7, 0);
 

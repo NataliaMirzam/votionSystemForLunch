@@ -4,6 +4,7 @@ import org.example.model.Meal;
 import org.example.repository.restaurant.CrudRestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,6 +21,7 @@ public class DataJpaMealRepository implements MealRepository{
     }
 
     @Override
+    @Transactional
     public Meal save(Meal meal, int restaurantId) {
         if (!meal.isNew() && (get(meal.id(), restaurantId) == null)) {
             return null;
