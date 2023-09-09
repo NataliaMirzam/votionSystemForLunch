@@ -1,10 +1,11 @@
 package org.example.model;
 
 
+import jakarta.persistence.*;
 import org.example.HasId;
 import org.springframework.util.Assert;
 
-import javax.persistence.*;
+
 import java.util.Objects;
 
 @MappedSuperclass

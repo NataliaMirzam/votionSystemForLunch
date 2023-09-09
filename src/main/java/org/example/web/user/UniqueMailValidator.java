@@ -1,54 +1,48 @@
-package ru.javawebinar.topjava.web.user;
+package org.example.web.user;
 
-
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.AllArgsConstructor;
 import org.example.HasIdAndEmail;
-import org.example.model.User;
-import org.example.repository.user.UserRepository;
-import org.example.web.SecurityUtil;
-import org.springframework.lang.Nullable;
+import org.example.repository.UserRepository;
+import org.example.web.AuthUser;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 
-
-import javax.servlet.http.HttpServletRequest;
-
 @Component
+@AllArgsConstructor
 public class UniqueMailValidator implements org.springframework.validation.Validator {
+    public static final String EXCEPTION_DUPLICATE_EMAIL = "User with this email already exists";
 
     private final UserRepository repository;
     private final HttpServletRequest request;
 
-    public UniqueMailValidator(UserRepository repository, @Nullable HttpServletRequest request) {
-        this.repository = repository;
-        this.request = request;
-    }
-
     @Override
-    public boolean supports(Class<?> clazz) {
+    public boolean supports(@NonNull Class<?> clazz) {
         return HasIdAndEmail.class.isAssignableFrom(clazz);
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(@NonNull Object target, @NonNull Errors errors) {
         HasIdAndEmail user = ((HasIdAndEmail) target);
         if (StringUtils.hasText(user.getEmail())) {
-            User dbUser = repository.get(user.getEmail().toLowerCase());
-            if (dbUser != null) {
-                Assert.notNull(request, "HttpServletRequest missed");
-                if (request.getMethod().equals("PUT") || (request.getMethod().equals("POST") && user.getId() != null)) {  // update for REST(PUT) and UI(POST)
-                    int dbId = dbUser.id();
-                    // it is ok, if update ourselves
-                    if (user.getId() != null && dbId == user.id()) return;
+            repository.findByEmailIgnoreCase(user.getEmail())
+                    .ifPresent(dbUser -> {
+                        if (request.getMethod().equals("PUT")) {  // UPDATE
+                            int dbId = dbUser.id();
 
-                    // workaround for update with user.id=null in request body
-                    // ValidationUtil.assureIdConsistent (id setter) called after this validation
-                    String requestURI = request.getRequestURI();
-                    if (requestURI.endsWith("/" + dbId) || (dbId == SecurityUtil.get().getId() && requestURI.contains("/profile"))) return;
-                }
-                errors.rejectValue("email", "exception.user.duplicateEmail");
-            }
+                            // it is ok, if update ourselves
+                            if (user.getId() != null && dbId == user.id()) return;
+
+                            // Workaround for update with user.id=null in request body
+                            // ValidationUtil.assureIdConsistent called after this validation
+                            String requestURI = request.getRequestURI();
+                            if (requestURI.endsWith("/" + dbId) || (dbId == AuthUser.authId() && requestURI.contains("/profile")))
+                                return;
+                        }
+                        errors.rejectValue("email", "", EXCEPTION_DUPLICATE_EMAIL);
+                    });
         }
     }
 }

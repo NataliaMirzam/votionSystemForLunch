@@ -1,11 +1,9 @@
 package org.example.util.validation;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Safelist;
-import ru.javawebinar.topjava.util.validation.NoHtml;
 
 public class NoHtmlValidator implements ConstraintValidator<NoHtml, String> {
     @Override

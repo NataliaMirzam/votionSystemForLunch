@@ -1,17 +1,16 @@
 package org.example.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.example.HasIdAndEmail;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
 
-
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Date;
 import java.util.EnumSet;
@@ -51,16 +50,16 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
     public User() {
     }
 
-    public User(Integer id, String name, String email, String password, boolean enabled, Date registered, Set<Role> roles) {
+    public User(Integer id, String name, String email, String password, Set<Role> roles) {
         this.email = email;
         this.password = password;
-        this.enabled = enabled;
-        this.registered = registered;
+        this.enabled = true;
+        this.registered = new Date();
         this.roles = roles;
     }
 
     public User(User u) {
-        this(u.id, u.name, u.email, u.password, u.enabled, u.registered, u.roles);
+        this(u.id, u.name, u.email, u.password, u.roles);
     }
 
     public String getEmail() {
@@ -101,6 +100,10 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
+    }
+
+    public boolean hasRole(Role role) {
+        return roles != null && roles.contains(role);
     }
 
     @Override

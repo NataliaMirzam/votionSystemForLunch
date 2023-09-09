@@ -1,11 +1,10 @@
 package org.example.model;
 
+import jakarta.persistence.*;
 import org.example.HasId;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-
-import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -19,9 +18,8 @@ public class Restaurant extends AbstractNamedEntity implements HasId {
     public Restaurant() {
     }
 
-    public Restaurant(String name, List<Meal> meals) {
-        this.name = name;
-        this.meals = meals;
+    public Restaurant(Integer id, String name) {
+        super(id, name);
     }
 
     public List<Meal> getMeals() {

@@ -1,13 +1,17 @@
 package org.example.web.restaurants;
 
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.model.Restaurant;
-import org.example.service.RestaurantService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.example.model.Role;
+import org.example.repository.RestaurantRepository;
+import org.example.web.AuthUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -19,50 +23,57 @@ import static org.example.util.validation.ValidationUtil.checkNew;
 
 @RestController
 @RequestMapping(value = RestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+@Slf4j
+@AllArgsConstructor
 public class RestaurantRestController {
-    private final Logger log = LoggerFactory.getLogger(getClass());
-
     @Autowired
-    private RestaurantService service;
+    private RestaurantRepository repository;
 
     static final String REST_URL = "/restaurants";
 
     @GetMapping("/{id}")
-    public Restaurant get(@PathVariable int id) {
+    public ResponseEntity<Restaurant> get(@PathVariable int id) {
         log.info("get restaurant {}", id);
-        return service.get(id);
+        return ResponseEntity.of(repository.findById(id));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id) {
-        log.info("delete restaurant {}", id);
-        service.delete(id);
+    public void delete(@AuthenticationPrincipal AuthUser authUser, @PathVariable int id) {
+        log.info("delete restaurant {} with user {}", id, authUser.id());
+        if (authUser.hasRole(Role.ADMIN)) {
+            repository.deleteById(id);
+        }
     }
 
     @GetMapping
     public List<Restaurant> getAll() {
-        return service.getAll();
+        log.info("getAll restaurants");
+        return repository.findAll();
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
-        log.info("update {} with id={}", restaurant, id);
-        assureIdConsistent(restaurant, id);
-        service.update(restaurant);
+    public void update(@AuthenticationPrincipal AuthUser authUser, @RequestBody Restaurant restaurant, @PathVariable int id) {
+        log.info("update restaurant {} with id={} with user {}", restaurant, id, authUser.id());
+        if (authUser.hasRole(Role.ADMIN)) {
+            assureIdConsistent(restaurant, id);
+            repository.save(restaurant);
+        }
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> createWithLocation(@AuthenticationPrincipal AuthUser authUser,
+                                                         @Valid @RequestBody Restaurant restaurant) {
         log.info("create {}", restaurant);
-        checkNew(restaurant);
-        Restaurant created = service.create(restaurant);
-
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
-                .buildAndExpand(created.getId()).toUri();
-
-        return ResponseEntity.created(uriOfNewResource).body(created);
+        if (authUser.hasRole(Role.ADMIN)) {
+            checkNew(restaurant);
+            Restaurant created = repository.save(restaurant);
+            URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path(REST_URL + "/{id}")
+                    .buildAndExpand(created.getId()).toUri();
+            return ResponseEntity.created(uriOfNewResource).body(created);
+        } else
+            return null;
     }
 }

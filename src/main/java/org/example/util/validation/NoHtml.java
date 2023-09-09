@@ -1,9 +1,8 @@
-package ru.javawebinar.topjava.util.validation;
+package org.example.util.validation;
 
-import org.example.util.validation.NoHtmlValidator;
+import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 
-import javax.validation.Constraint;
-import javax.validation.Payload;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -17,7 +16,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({METHOD, FIELD})
 @Retention(RUNTIME)
 public @interface NoHtml {
-    String message() default "Unsafe html content";
+    String message() default "{error.noHtml}";
 
     Class<?>[] groups() default {};
 

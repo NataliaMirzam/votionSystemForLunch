@@ -1,26 +1,21 @@
 package org.example.to;
 
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.HasId;
 
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
+@Data
 public abstract class BaseTo implements HasId {
-    @ApiModelProperty(hidden = true)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     protected Integer id;
 
-    public BaseTo() {
-    }
-
-    public BaseTo(Integer id) {
-        this.id = id;
-    }
-
     @Override
-    public Integer getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
+    public String toString() {
+        return getClass().getSimpleName() + ":" + id;
     }
 }

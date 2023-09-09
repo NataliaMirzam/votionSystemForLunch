@@ -1,51 +1,32 @@
 package org.example.model;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.example.HasId;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "meal")
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(callSuper = true, exclude = {"restaurant"})
 public class Meal extends AbstractNamedEntity implements HasId {
-    @ManyToOne
+    @Column(name = "dt", nullable = false, columnDefinition = "date default CAST( now() AS Date )", updatable = false)
+    @NotNull
+    private LocalDate date = LocalDateTime.now().toLocalDate();
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Restaurant restaurant;
 
-    public Meal() {
-    }
-
-    public Meal(String name, Restaurant restaurant) {
-        super(null, name);
-        this.restaurant = restaurant;
-    }
-
-    public Meal(Integer id, String name, Restaurant restaurant) {
+    public Meal(Integer id, String name, @NotNull LocalDate date) {
         super(id, name);
-        this.restaurant = restaurant;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    @Override
-    public String toString() {
-        return "Meal{" +
-                "restaurant=" + restaurant +
-                ", id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+        this.date = date;
     }
 }

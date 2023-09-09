@@ -1,77 +1,35 @@
 package org.example.to;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.EqualsAndHashCode;
+import lombok.Value;
 import org.example.HasIdAndEmail;
-import org.example.util.UsersUtil;
-import org.hibernate.validator.constraints.Range;
+import org.example.util.validation.NoHtml;
 
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.io.Serial;
-import java.io.Serializable;
-
-public class UserTo extends BaseTo implements HasIdAndEmail, Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    @NotBlank
-    @Size(min = 2, max = 100)
-    @ru.javawebinar.topjava.util.validation.NoHtml
-    private String name;
-
+@Value
+@EqualsAndHashCode(callSuper = true)
+public class UserTo extends NamedTo implements HasIdAndEmail {
     @Email
     @NotBlank
     @Size(max = 100)
-    @ru.javawebinar.topjava.util.validation.NoHtml // https://stackoverflow.com/questions/17480809
-    private String email;
+    @NoHtml
+    String email;
 
     @NotBlank
     @Size(min = 5, max = 32)
-    private String password;
-
-    public UserTo() {
-    }
+    String password;
 
     public UserTo(Integer id, String name, String email, String password) {
-        super(id);
+        super(id, name);
         this.name = name;
         this.email = email;
         this.password = password;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @Override
     public String toString() {
-        return "UserTo{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return "UserTo:" + id + '[' + email + ']';
     }
 }
