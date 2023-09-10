@@ -3,8 +3,6 @@ package org.example.web.vote;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.model.Meal;
-import org.example.model.Restaurant;
 import org.example.model.Vote;
 import org.example.repository.VoteRepository;
 import org.example.service.VoteService;

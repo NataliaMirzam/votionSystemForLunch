@@ -1,8 +1,8 @@
 package org.example.web;
 
 import lombok.Getter;
-import org.example.model.User;
 import org.example.model.Role;
+import org.example.model.User;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

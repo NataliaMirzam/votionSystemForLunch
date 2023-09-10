@@ -2,7 +2,6 @@ package org.example.repository;
 
 import org.example.error.DataConflictException;
 import org.example.model.Vote;
-import org.example.repository.BaseRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

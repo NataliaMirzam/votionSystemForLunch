@@ -1,14 +1,11 @@
 package org.example.web.restaurant;
 
-import org.example.model.Meal;
 import org.example.model.Restaurant;
-import org.example.to.MealTo;
 import org.example.to.RestaurantTo;
 import org.example.web.MatcherFactory;
 
 import java.util.List;
 
-import static java.time.LocalDateTime.now;
 import static org.example.web.meal.MealTestData.*;
 
 public class RestaurantTestData {

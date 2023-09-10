@@ -6,6 +6,7 @@ import org.example.repository.MealRepository;
 import org.example.repository.RestaurantRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 @Service
 @AllArgsConstructor
 public class MealService {

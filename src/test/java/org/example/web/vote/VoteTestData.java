@@ -23,11 +23,11 @@ public class VoteTestData {
     public static final Vote vote1 = new Vote(VOTE_ID, user, LocalDate.now(), LocalTime.now(), restaurant1);
     public static final Vote vote2 = new Vote(VOTE_ID + 1, admin, LocalDate.now(), LocalTime.now(), restaurant1);
     public static final Vote vote3 = new Vote(VOTE_ID + 2, user, LocalDate.now().minusDays(1),
-                                                LocalTime.now(), restaurant2);
+            LocalTime.now(), restaurant2);
     public static final Vote vote4 = new Vote(VOTE_ID + 3, admin, LocalDate.now().minusDays(1),
-                                                LocalTime.now(), restaurant2);
+            LocalTime.now(), restaurant2);
     public static final Vote vote5 = new Vote(VOTE_ID + 4, user, LocalDate.now().minusDays(2),
-                                                LocalTime.now(), restaurant3);
+            LocalTime.now(), restaurant3);
     public static final Vote vote6 = new Vote(VOTE_ID + 5, user, LocalDate.now().minusDays(3),
             LocalTime.now(), restaurant1);
     public static final Vote vote7 = new Vote(VOTE_ID + 6, admin, LocalDate.now().minusDays(3),
@@ -35,7 +35,6 @@ public class VoteTestData {
 
     public static final List<Vote> listOfVotes1 = List.of(vote1, vote2, vote6);
     public static final List<Vote> listOfVotes2 = List.of(vote1, vote2);
-
 
 
     public static Vote getNew() {

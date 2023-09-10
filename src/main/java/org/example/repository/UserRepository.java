@@ -2,8 +2,6 @@ package org.example.repository;
 
 import org.example.error.NotFoundException;
 import org.example.model.User;
-import org.example.repository.BaseRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
