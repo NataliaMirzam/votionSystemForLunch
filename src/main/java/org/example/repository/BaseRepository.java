@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.error.NotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,11 +21,11 @@ public interface BaseRepository<T> extends JpaRepository<T, Integer> {
     @SuppressWarnings("all") // transaction invoked
     default void deleteExisted(int id) {
         if (delete(id) == 0) {
-            throw new RuntimeException("Entity with id=" + id + " not found");
+            throw new NotFoundException("Entity with id=" + id + " not found");
         }
     }
 
     default T getExisted(int id) {
-        return findById(id).orElseThrow(() -> new RuntimeException("Entity with id=" + id + " not found"));
+        return findById(id).orElseThrow(() -> new NotFoundException("Entity with id=" + id + " not found"));
     }
 }

@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.error.DataConflictException;
 import org.example.model.Meal;
 import org.example.repository.BaseRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,6 +31,6 @@ public interface MealRepository extends BaseRepository<Meal> {
 
     default Meal getExistedOrBelonged(int restaurantId, int id) {
         return get(id, restaurantId).orElseThrow(
-                () -> new RuntimeException("Meal id=" + id + "   is not exist or doesn't belong to Restaurant id=" + restaurantId));
+                () -> new DataConflictException("Meal id=" + id + "   is not exist or doesn't belong to Restaurant id=" + restaurantId));
     }
 }

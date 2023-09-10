@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.error.NotFoundException;
 import org.example.model.User;
 import org.example.repository.BaseRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,6 +27,6 @@ public interface UserRepository extends BaseRepository<User> {
     }
 
     default User getExistedByEmail(String email) {
-        return findByEmailIgnoreCase(email).orElseThrow(() -> new RuntimeException("User with email=" + email + " not found"));
+        return findByEmailIgnoreCase(email).orElseThrow(() -> new NotFoundException("User with email=" + email + " not found"));
     }
 }

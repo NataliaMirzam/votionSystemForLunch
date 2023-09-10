@@ -1,6 +1,8 @@
-package org.example;
+package org.example.web.meal;
 
 import org.example.model.Meal;
+import org.example.to.MealTo;
+import org.example.web.MatcherFactory;
 
 import java.util.List;
 
@@ -9,7 +11,7 @@ import static java.time.LocalDateTime.now;
 
 public class MealTestData {
     public static final MatcherFactory.Matcher<Meal> MEAL_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Meal.class, "restaurant");
-//    public static MatcherFactory.Matcher<MealTo> TO_MATCHER = MatcherFactory.usingEqualsComparator(MealTo.class);
+    public static MatcherFactory.Matcher<MealTo> MEAL_TO_MATCHER = MatcherFactory.usingEqualsComparator(MealTo.class);
 
     public static final int NOT_FOUND = 10;
     public static final int MEAL_ID = 1;

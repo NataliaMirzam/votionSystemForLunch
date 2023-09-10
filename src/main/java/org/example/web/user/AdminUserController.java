@@ -16,8 +16,8 @@ import static org.example.util.validation.ValidationUtil.assureIdConsistent;
 import static org.example.util.validation.ValidationUtil.checkNew;
 
 @RestController
-@RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminRestController extends AbstractUserController {
+@RequestMapping(value = AdminUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class AdminUserController extends AbstractUserController {
     static final String REST_URL = "/api/admin/users";
 
     @GetMapping

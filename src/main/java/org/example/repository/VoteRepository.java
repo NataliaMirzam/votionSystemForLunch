@@ -1,5 +1,6 @@
 package org.example.repository;
 
+import org.example.error.DataConflictException;
 import org.example.model.Vote;
 import org.example.repository.BaseRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -16,6 +17,9 @@ public interface VoteRepository extends BaseRepository<Vote> {
     @Query("SELECT v FROM Vote v WHERE v.id = :id and v.restaurant.id=:restaurantId")
     Optional<Vote> get(int id, int restaurantId);
 
+    @Query("SELECT v FROM Vote v WHERE v.id = :id and v.user.id=:userId")
+    Optional<Vote> getByUser(int id, int userId);
+
     @Query("SELECT v FROM Vote v WHERE v.restaurant.id=:restaurantId")
     List<Vote> getAll(@Param("restaurantId") int restaurantId);
 
@@ -28,7 +32,7 @@ public interface VoteRepository extends BaseRepository<Vote> {
     int delete(@Param("id") int id, @Param("restaurantId") int restaurantId, @Param("userId") int userId);
 
     default Vote getExistedOrBelonged(int userId, int id) {
-        return get(id, userId).orElseThrow(
-                () -> new RuntimeException("Vote id=" + id + "   is not exist or doesn't belong to User id=" + userId));
+        return getByUser(id, userId).orElseThrow(
+                () -> new DataConflictException("Vote id=" + id + "   is not exist or doesn't belong to User id=" + userId));
     }
 }

@@ -53,10 +53,20 @@ public class User extends NamedEntity implements HasIdAndEmail {
     private Set<Role> roles;
 
     public User(Integer id, String name, String email, String password, Set<Role> roles) {
+        super(id, name);
         this.email = email;
         this.password = password;
         this.enabled = true;
         this.registered = new Date();
+        this.roles = roles;
+    }
+
+    public User(Integer id, String name, String email, String password, boolean enabled, @NotNull Date registered, Set<Role> roles) {
+        super(id, name);
+        this.email = email;
+        this.password = password;
+        this.enabled = enabled;
+        this.registered = registered;
         this.roles = roles;
     }
 
@@ -110,13 +120,6 @@ public class User extends NamedEntity implements HasIdAndEmail {
 
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", registered=" + registered +
-                '}';
+        return "User:" + id + '[' + email + ']';
     }
 }

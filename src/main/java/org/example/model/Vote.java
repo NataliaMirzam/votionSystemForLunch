@@ -21,11 +21,11 @@ public class Vote extends BaseEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @Column(name = "date", nullable = false, columnDefinition = "date default CAST( now() AS Date )", updatable = false)
+    @Column(name = "dt", nullable = false, columnDefinition = "date default CAST( now() AS Date )", updatable = false)
     @NotNull
     private LocalDate date = LocalDateTime.now().toLocalDate();
 
-    @Column(name = "time", nullable = false, columnDefinition = "time default CAST( now() AS Time )", updatable = false)
+    @Column(name = "tm", nullable = false, columnDefinition = "time default CAST( now() AS Time )", updatable = false)
     @NotNull
     private LocalTime time = LocalDateTime.now().toLocalTime();
 
@@ -33,14 +33,6 @@ public class Vote extends BaseEntity {
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
-
-    public Vote(User user, LocalDate date, LocalTime time, Restaurant restaurant) {
-        super(null);
-        this.user = user;
-        this.date = date;
-        this.time = time;
-        this.restaurant = restaurant;
-    }
 
     public Vote(Integer id, User user, LocalDate date, LocalTime time, Restaurant restaurant) {
         super(id);
