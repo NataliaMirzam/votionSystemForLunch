@@ -21,7 +21,7 @@ import static org.example.util.validation.ValidationUtil.checkNew;
 @RestController
 @RequestMapping(value = ProfileRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProfileRestController extends AbstractUserController {
-    static final String REST_URL = "/profile";
+    static final String REST_URL = "/api/profile";
 
     @GetMapping
     public User get(@AuthenticationPrincipal AuthUser authUser) {

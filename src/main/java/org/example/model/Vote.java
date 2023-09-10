@@ -2,6 +2,7 @@ package org.example.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import java.time.LocalDate;
@@ -10,7 +11,11 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "vote")
-public class Vote extends AbstractBaseEntity {
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(callSuper = true, exclude = {"user", "restaurant"})
+public class Vote extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -28,9 +33,6 @@ public class Vote extends AbstractBaseEntity {
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
-
-    public Vote() {
-    }
 
     public Vote(User user, LocalDate date, LocalTime time, Restaurant restaurant) {
         super(null);

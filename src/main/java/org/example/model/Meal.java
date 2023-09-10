@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString(callSuper = true, exclude = {"restaurant"})
-public class Meal extends AbstractNamedEntity implements HasId {
+public class Meal extends NamedEntity implements HasId {
     @Column(name = "dt", nullable = false, columnDefinition = "date default CAST( now() AS Date )", updatable = false)
     @NotNull
     private LocalDate date = LocalDateTime.now().toLocalDate();

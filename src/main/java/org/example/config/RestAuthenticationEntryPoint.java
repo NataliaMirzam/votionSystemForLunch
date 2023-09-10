@@ -12,6 +12,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 @Component
 @AllArgsConstructor
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
     @Qualifier("handlerExceptionResolver")
     private final HandlerExceptionResolver resolver;
 

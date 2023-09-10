@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 import org.example.HasIdAndEmail;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.OnDelete;
@@ -18,7 +19,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends AbstractNamedEntity implements HasIdAndEmail {
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString(callSuper = true, exclude = {"roles"})
+public class User extends NamedEntity implements HasIdAndEmail {
     @Email(message = "Email should be valid")
     @Column(name = "email", nullable = false, unique = true)
     @NotBlank(message = "Email should not be blank")
@@ -46,9 +51,6 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
-
-    public User() {
-    }
 
     public User(Integer id, String name, String email, String password, Set<Role> roles) {
         this.email = email;

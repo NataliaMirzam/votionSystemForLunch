@@ -18,7 +18,7 @@ import static org.example.util.validation.ValidationUtil.checkNew;
 @RestController
 @RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminRestController extends AbstractUserController {
-    static final String REST_URL = "/admin/users";
+    static final String REST_URL = "/api/admin/users";
 
     @GetMapping
     public List<User> getAll() {
