@@ -6,15 +6,15 @@ insert into users (name, email, password)
 values (
   'User', 
   'user@yandex.ru', 
-  'password'
+  '{noop}password'
 ), (
   'Admin', 
   'admin@gmail.com', 
-  'admin'
+  '{noop}admin'
 ), (
   'Guest',
   'guest@gmail.com',
-  'guest'
+  '{noop}guest'
 );
 insert into user_role (role, user_id)
 values (
