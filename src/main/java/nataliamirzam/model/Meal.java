@@ -2,6 +2,7 @@ package nataliamirzam.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import nataliamirzam.HasId;
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "meal")
+@Table(name = "meal", uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "dt"}, name = "meal_unique_name_dt_idx")})
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -20,13 +21,18 @@ public class Meal extends NamedEntity implements HasId {
     @NotNull
     private LocalDate date = LocalDateTime.now().toLocalDate();
 
+    @Column(name = "price", nullable = false)
+    @NotNull
+    private Integer price;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @JsonIgnore
     private Restaurant restaurant;
 
-    public Meal(Integer id, String name, @NotNull LocalDate date) {
+    public Meal(Integer id, String name, @NotNull LocalDate date, Integer price) {
         super(id, name);
         this.date = date;
+        this.price = price;
     }
 }

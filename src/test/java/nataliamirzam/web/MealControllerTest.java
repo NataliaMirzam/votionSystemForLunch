@@ -112,7 +112,7 @@ class MealControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = UserTestData.ADMIN_MAIL)
     void createInvalid() throws Exception {
-        Meal invalid = new Meal(null, "Dummy", null);
+        Meal invalid = new Meal(null, "Dummy", null, 0);
         perform(MockMvcRequestBuilders.post(REST_URL_SLASH + RESTAURANT_ID + "/meals")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid)))
@@ -123,7 +123,7 @@ class MealControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = UserTestData.ADMIN_MAIL)
     void updateInvalid() throws Exception {
-        Meal invalid = new Meal(MEAL_ID, null, null);
+        Meal invalid = new Meal(MEAL_ID, null, null, 0);
         perform(MockMvcRequestBuilders.put(REST_URL_SLASH + RESTAURANT_ID + "/meals/" + MEAL_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid)))
@@ -134,7 +134,7 @@ class MealControllerTest extends AbstractControllerTest {
     @Test
     @WithUserDetails(value = UserTestData.ADMIN_MAIL)
     void updateHtmlUnsafe() throws Exception {
-        Meal invalid = new Meal(MEAL_ID, "<script>alert(123)</script>", LocalDate.now());
+        Meal invalid = new Meal(MEAL_ID, "<script>alert(123)</script>", LocalDate.now(), 0);
         perform(MockMvcRequestBuilders.put(REST_URL_SLASH + RESTAURANT_ID + "/meals/" + MEAL_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid)))
@@ -146,7 +146,7 @@ class MealControllerTest extends AbstractControllerTest {
     @Transactional(propagation = Propagation.NEVER)
     @WithUserDetails(value = UserTestData.ADMIN_MAIL)
     void updateDuplicate() throws Exception {
-        Meal invalid = new Meal(MEAL_ID, "Dummy", meal2.getDate());
+        Meal invalid = new Meal(MEAL_ID, "Dummy", meal2.getDate(), 0);
         perform(MockMvcRequestBuilders.put(REST_URL_SLASH + RESTAURANT_ID_INCORRECT + "/meals/" + MEAL_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid)))

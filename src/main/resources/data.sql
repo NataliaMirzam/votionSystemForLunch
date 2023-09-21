@@ -29,31 +29,39 @@ values (
 );
 insert into restaurant (name)
 values ('Italian'), ('Chinese'), ('Hindian');
-insert into meal (name, restaurant_id)
+insert into meal (name, restaurant_id, price)
 values (
   'Italian breakfast', 
-  1
+  1,
+  50
 ), (
   'Italian lunch', 
-  1
+  1,
+  100
 ), (
   'Italian dinner', 
-  1
+  1,
+  200
 ), (
   'Chinese breakfast', 
-  2
+  2,
+  60
 ), (
   'Chinese lunch', 
-  2
+  2,
+  70
 ), (
   'Chinese dinner', 
-  2
+  2,
+  80
 ), (
   'Hindian breakfast', 
-  3
+  3,
+  65
 ), (
   'Hindian lunch',
-  3
+  3,
+  85
 );
 insert into vote (user_id, dt, tm, restaurant_id)
 values (
